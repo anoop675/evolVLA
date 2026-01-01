@@ -118,6 +118,8 @@ Metrics include:
 - Strong alignment in vehicles, plants, structures, tools
 - Meaningful class clusters & similarity hierarchies
 
+<img width="1558" height="1204" alt="image" src="https://github.com/user-attachments/assets/fbb432bb-16fb-4c88-828d-9a607bda82d5" />
+
 This indicates:
 
 - stable semantic geometry
