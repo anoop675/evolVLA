@@ -24,7 +24,7 @@ Instead:
 
 1. A **Skip-Gram model** is trained on a Visual Genome co-occurrence network  
 2. CIFAR-100 class labels are inserted into the embedding space using an  
-   **Evolutionary Anchor-based semantic insertion method**
+   **Evolutionary Anchor-based semantic insertion method (Weighted-Anchor EA Insertion)**
 3. A frozen CNN image encoder (MobileNetV3) is trained with a  
    **projection head + symmetric InfoNCE loss**  
    to align images with semantically coherent word embeddings
