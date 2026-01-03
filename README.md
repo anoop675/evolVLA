@@ -1,6 +1,6 @@
 # AnchorCLIP-VLM - Vision–Language Alignment via Evolutionary Semantic Embeddings (CLIP-Style CIFAR-100)
 
-This project implements a **CLIP-style contrastive Vision–Language model** for CIFAR-100, where images and class-label words are mapped into a shared embedding space. Unlike standard CLIP pipelines that rely on pre-trained language models, this work builds a **visually grounded semantic embedding space** and aligns image features to it using contrastive learning.
+Designed EvoVLA, a **CLIP-style zero-shot image–text alignment model** where CIFAR-100 images are classified via nearest-neighbour retrieval in a shared embedding space. Trained Skip-Gram text embeddings on Visual Genome and enhanced class semantics using evolutionary anchor insertion, achieving ~90% Recall@10 with stronger semantic clustering across related labels. This project implements a **CLIP-style contrastive Vision–Language model** for CIFAR-100, where images and class-label words are mapped into a shared embedding space. Unlike standard CLIP pipelines that rely on pre-trained language models, this work builds a **visually grounded semantic embedding space** and aligns image features to it using contrastive learning.
 
 The system achieves **~90% Recall@10** on image→text retrieval and demonstrates strong class-wise semantic alignment, stable neighbourhood structures, and meaningful OOD retrieval behaviour.
 
