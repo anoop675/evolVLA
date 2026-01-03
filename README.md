@@ -24,9 +24,10 @@ Instead:
 
 1. A **Skip-Gram model** is trained on a Visual Genome co-occurrence network  
 2. CIFAR-100 class labels are inserted into the embedding space using an  
-   **Evolutionary Anchor-based semantic insertion method (Weighted-Anchor EA Insertion)**
-   The Skip-Gram model learns semantic relationships from Visual Genome co-occurrence data, and an evolutionary anchor-insertion process integrates CIFAR-100 class labels into this space. The projection head is then trained to align CNN image embeddings to these semantically-enriched word representations, enabling the model to map images into a concept space shaped by real-world visual context.
-4. A frozen CNN image encoder (MobileNetV3) is trained with a  
+   **Evolutionary Anchor-based semantic insertion method (Weighted-Anchor (1+lambda) GA Insertion)**
+
+   Nuance: The Skip-Gram model learns semantic relationships from Visual Genome co-occurrence data, and an evolutionary anchor-insertion process integrates CIFAR-100 class labels into this space. The projection head is then trained to align CNN image embeddings to these semantically-enriched word representations, enabling the model to map images into a concept space shaped by real-world visual context.
+3. A frozen CNN image encoder (MobileNetV3) is trained with a  
    **projection head + symmetric InfoNCE loss**  
    to align images with semantically coherent word embeddings
 
