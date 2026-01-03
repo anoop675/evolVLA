@@ -1,6 +1,6 @@
 # EvoVLA - Vision–Language Alignment via Evolutionary Semantic Embeddings (CLIP-Style CIFAR-100)
 
-Designed EvoVLA, a **CLIP-style zero-shot image–text alignment model** where CIFAR-100 images are classified via nearest-neighbour retrieval in a shared embedding space. Trained Skip-Gram text embeddings on Visual Genome and enhanced class semantics using evolutionary anchor insertion, achieving ~90% Recall@10 with stronger semantic clustering across related labels. This project implements a **CLIP-style contrastive Vision–Language model** for CIFAR-100, where images and class-label words are mapped into a shared embedding space. Unlike standard CLIP pipelines that rely on pre-trained language models, this work builds a **visually grounded semantic embedding space** and aligns image features to it using contrastive learning.
+Designed EvoVLA, a **CLIP-style zero-shot image–text alignment model** where CIFAR-100 images are classified via nearest-neighbour retrieval in a shared embedding space. Trained Skip-Gram text embeddings on Visual Genome and enhanced class semantics using evolutionary anchor insertion, achieving ~90% Recall@10 with stronger semantic clustering across related labels. The images and class-label words are mapped into a shared embedding space. Unlike standard CLIP pipelines that rely on pre-trained language models, this work builds a **visually grounded semantic embedding space** and aligns image features to it using contrastive learning.
 
 The system achieves **~90% Recall@10** on image→text retrieval and demonstrates strong class-wise semantic alignment, stable neighbourhood structures, and meaningful OOD retrieval behaviour.
 
@@ -52,6 +52,9 @@ A Skip-Gram model was trained to learn:
 - neighbourhood-preserving embedding geometry
 
 The resulting vocabulary reflects **how objects co-occur in real scenes**, rather than purely linguistic usage.
+
+Rationale for the need of co-occurence network:
+The co-occurrence graph was used instead of training Skip-Gram directly on the raw text corpus because it provides a structured, globally consistent representation of how objects appear together in the visual world. Rather than relying only on local sentence windows, the graph aggregates co-occurrence statistics across all Visual Genome region descriptions, forming a weighted network where nodes represent object concepts and edges encode the strength of their visual relationships. This produces a smoother and more semantically meaningful topology — grouping objects such as apple–orange–pear or lizard–snake–crocodile according to shared context — which aligns more closely with image features than purely linguistic similarity. The graph also makes neighbourhood structure explicit, enabling us to evaluate, preserve, and optimise semantic clusters during evolutionary anchor insertion. This is crucial for robust alignment in our contrastive learning stage, as the resulting text embedding space is not only linguistically coherent, but also visually grounded and structurally stable for zero-shot retrieval and generalisation.
 
 ---
 
