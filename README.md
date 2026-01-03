@@ -41,15 +41,14 @@ The result is a **structured multimodal embedding space** that is:
 
 ## System Architecture
 
-### 1) Text Embedding Space — Skip-Gram over Visual Co-Occurrence Graph
+### Text Embedding Backbone — Skip-Gram over Visual Genome
 
-A co-occurrence network was built from **Visual Genome captions**.
+Built a semantic text backbone by training Skip-Gram word embeddings on a co-occurrence network constructed from Visual Genome regional descriptions, ensuring that word relationships reflect visually grounded object interactions rather than purely linguistic similarity.
 
-A Skip-Gram model was trained to learn:
-
-- contextual visual relationships
-- semantic similarity structure
-- neighbourhood-preserving embedding geometry
+- Constructed a co-occurrence graph from region descriptions.
+- Learned embeddings using a custom Skip-Gram text model.
+- Captured spatial & contextual object relationships (e.g., car-road, tree-forest, table-chair)
+- This provided a visually grounded semantic embedding space rather than a generic language model vocabulary.
 
 The resulting vocabulary reflects **how objects co-occur in real scenes**, rather than purely linguistic usage.
 
@@ -58,9 +57,20 @@ The co-occurrence graph was used instead of training Skip-Gram directly on the r
 
 ---
 
-### 2) Evolutionary Anchor-Based Label Insertion (EA)
+### 2) Evolutionary Weighted-Anchor Insertion — Cross-Domain Embedding Expansion
 
-CIFAR-100 labels were inserted into the embedding space using an **evolutionary search with weighted-anchors**, instead of random or mean-based placement.
+Expanded the VG embedding space to integrate CIFAR-100 class labels using a (1+λ) evolutionary anchor-insertion strategy instead of retraining from scratch. CIFAR-100 labels were inserted into the embedding space using an **evolutionary search with weighted-anchors**, instead of random or mean-based placement.
+
+- New class vectors were inserted by evolving around selected semantic anchor words
+- Fitness preserved semantic local neighbourhood structure (embedding space geometry)
+- Avoided embedding drift and catastrophic disruption
+- Enabled stable cross-domain transfer learning
+
+This allowed CIFAR-100 labels to be added while:
+
+✔ preserving existing semantics
+✔ maintaining neighbourhood coherence
+✔ avoiding costly full-model retraining
 
 EA optimisation preserved:
 
@@ -78,11 +88,16 @@ This produces a **523-word enriched semantic vocabulary space**.
 
 ---
 
-### 3) Vision Encoder + InfoNCE Projection Head
+### 3) Vision Backbone — MobileNetV3 + InfoNCE Projection Head
 
 - Backbone: **MobileNetV3-Small (frozen)**
 - Output features: 576-dim
-- Trainable projection head maps features → text embedding space
+- MobileNetV3 extracts visual features
+- Trainable projection head maps features -> text embedding space. Projection head learns alignment transformation.
+- Used pretrained MobileNetV3 as a frozen visual encoder and added a trainable projection head to map image features into the Skip-Gram text embedding space.
+- Embeddings are normalized for cross-modal similarity learning
+
+This produced a lightweight and efficient VLM-style architecture.
 
 Training objective:
 
@@ -98,6 +113,19 @@ This encourages:
 
 ---
 
+### 4) Multimodal Alignment — CLIP-Style Contrastive Learning
+
+- Aligned visual and text embeddings using supervised multimodal contrastive learning with InfoNCE loss.
+- Images mapped to text-embedding space
+- Matching pairs pulled together
+- Non-matching pairs pushed apart
+- Training objective encourages semantic alignment
+
+This enabled both:
+
+✔ zero-shot image-to-text retrieval
+✔ text-guided image reasoning
+
 ## Training Pipeline (End-to-End)
 Visual Genome captions → build co-occurrence graph → Train Skip-Gram word embeddings → Evolutionary Anchor Insertion for CIFAR-100 labels → Freeze text embedding space (semantic prior) → Train projection head using contrastive InfoNCE → Evaluate retrieval, alignment & OOD behaviour
 
@@ -109,17 +137,22 @@ The projection head learns to **adapt image features into a fixed, semantically 
 
 Evaluation is retrieval-based, not classification-based.
 
-Metrics include:
+Skip-Gram Evaluation:
+- Pairwise Cosine similarity 
+- Nearest Neighbour Analysis
+- Word Analogies
 
-- Image→Text Recall@K
-- Text→Image Recall@K
+Projection Head Evaluation:
+- Image->Text Retieval Recall@K
+- Text->Image Recall@K
+- Confusion Matrix (to evaluate k-NN (zero shot) classification on CIFAR-100 images)
 - Per-class similarity distribution
-- Neighbourhood structure preservation
 - OOD retrieval behaviour
 
 ### Achieved Performance
 
-- **~90% Recall@10 (image→text retrieval)**
+- **~91% Recall@10 (image->text retrieval)**
+- **~100% Recall@10 (text->image retrieval)**
 - Strong alignment in vehicles, plants, structures, tools
 - Meaningful class clusters & similarity hierarchies
 
