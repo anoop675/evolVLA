@@ -1,0 +1,9 @@
+EvoVLA — Evolutionary Vision-Language Alignment Model
+
+Developed a lightweight CLIP-style zero-shot image classification and retrieval system for CIFAR-100 by first learning word embeddings using a Skip-Gram model trained on a co-occurrence network constructed from Visual Genome regional descriptions. This provided a text embedding space grounded in visually meaningful relationships between objects (e.g., car–road, tree–forest, table–chair), rather than purely linguistic similarity.
+
+To extend this embedding space to CIFAR-100 without retraining the entire model, a (1+λ) evolutionary anchor-insertion strategy was applied to integrate new class labels while preserving the neighbourhood structure of the Visual Genome embeddings. This enabled stable cross-domain adaptation of semantics and avoided disruption of previously learned latent-space relationships.
+
+For the vision component, a pretrained MobileNetV3 backbone was used, and a projection head was trained to align image features with the enriched text embedding space. Alignment was learned using CLIP-style supervised multimodal contrastive learning with an InfoNCE objective, encouraging images and their corresponding class text representations to map close together in a shared embedding space.
+
+The resulting model achieved approximately 91% Recall@10 on image-to-text retrieval and demonstrated improved semantic coherence across related class clusters, highlighting the effectiveness of evolutionary embedding adaptation and lightweight multimodal representation alignment.
