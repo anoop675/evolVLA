@@ -157,7 +157,8 @@ Projection Head Evaluation:
 - **~100% Recall@10 (text->image retrieval)**
 - Strong alignment in vehicles, plants, structures, tools
 - Meaningful class clusters & similarity hierarchies
-
+<img width="160" height="156" alt="image" src="https://github.com/user-attachments/assets/668ea559-27bc-4c2c-9b5d-d45263decd51" />
+<img width="160" height="141" alt="image" src="https://github.com/user-attachments/assets/aee34322-efbb-4d94-8476-4ef61dda0335" />
 <img width="1558" height="1204" alt="image" src="https://github.com/user-attachments/assets/fbb432bb-16fb-4c88-828d-9a607bda82d5" />
 
 This indicates:
