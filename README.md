@@ -172,7 +172,7 @@ This indicates:
 Planned extensions:
 
 - Compare model performance against standard cross-entropy classification version of this use-case
-- Zero-shot learning with relational prompts
+- Zero-shot learning with relational prompts (vanilla CLIP-style)
   - Implement Inductive Zero-Shot Learning (IZSL) - Train on seen classes, test on completely unseen classes at inference (no access to unseen class data during training)
   - Implement Transductive Zero-Shot Learning (TZSL) - Train on seen classes, but have access to unlabeled images from unseen classes during training
 - Joint training of both modalities
