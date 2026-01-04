@@ -1,8 +1,10 @@
-# EvoVLA - Vision–Language Alignment via Evolutionary Semantic Embeddings (CLIP-Style CIFAR-100)
+# Supervised Evolutionary Vision–Language Alignment Model (EvolVLA) (CLIP-Style CIFAR-100)
 
-Designed EvoVLA, a **CLIP-style zero-shot image–text alignment model** where CIFAR-100 images are classified via nearest-neighbour retrieval in a shared embedding space. Trained Skip-Gram text embeddings on Visual Genome and enhanced class semantics using evolutionary anchor insertion, achieving ~90% Recall@10 with stronger semantic clustering across related labels. The images and class-label words are mapped into a shared embedding space. Unlike standard CLIP pipelines that rely on pre-trained language models, this work builds a **visually grounded semantic embedding space** and aligns image features to it using contrastive learning.
+Built a lightweight image–text alignment and retrieval model for CIFAR-100 by training Skip-gram word embeddings from a co-occurrence network built on Visual Genome to semantically capture visually-grounded object scene descriptions.
+Demonstrated stable cross-domain embedding transfer learning by expanding the text embedding space using (1+λ) evolutionary algorithm, coherently integrating CIFAR-100 class labels for alignment with image embeddings while preserving the learned semantic relationships - without retraining the entire latent space.
+Used a pretrained MobileNetV3 as the vision backbone and aligned image features to the EA-enriched Skip-gram text space using CLIP-style supervised multimodal contrastive learning with InfoNCE loss, achieving ~91% Recall@10 in image-to-text retrieval and improved semantic coherence and generalization across class clusters.
 
-The system achieves **~90% Recall@10** on image→text retrieval and demonstrates strong class-wise semantic alignment, stable neighbourhood structures, and meaningful OOD retrieval behaviour.
+The system achieves **~91% Recall@10** on image→text retrieval and demonstrates strong class-wise semantic alignment, stable neighbourhood structures, and meaningful OOD retrieval behaviour.
 
 ---
 
@@ -168,9 +170,12 @@ This indicates:
 
 Planned extensions:
 
+- Compare model performance against standard cross-entropy classification version of this use-case
+- Zero-shot learning with relational prompts
+  - Implement Inductive Zero-Shot Learning (IZSL) - Train on seen classes, test on completely unseen classes at inference (no access to unseen class data during training)
+  - Implement Transductive Zero-Shot Learning (TZSL) - Train on seen classes, but have access to unlabeled images from unseen classes during training
 - Joint training of both modalities
 - Few-shot novel class embedding insertion
-- Zero-shot learning with relational prompts
 - Graph neural networks over embedding neighbourhoods
 - Compare against CLIP text encoder representations
 
